@@ -1,30 +1,14 @@
 console.log('JS console start');
-const content = document.querySelector('#content');
 
-// fetch('http://127.0.0.1:5000/api/get_data/', {
-//     method: 'GET',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     }
-// })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error(`Ошибка HTTP: ${response.status}`);
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log('Данные от API:', data);
-//         content.innerText = data.message;
-//     })
-//     .catch(error => {
-//         console.error('Ошибка:', error);
-//         content.innerText = 'Произошла ошибка при запросе';
-//     });
-
-async function fetchData() {
+async function fetchData(url, content_name) {
+    const content = document.querySelector(content_name);
+    if (!content) {
+        console.error(`Элемент ${content_name} не найден`);
+        return;
+    }
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/get_data/', {
+        content.innerText = 'Загружаю данные...';
+        const response = await fetch(`http://127.0.0.1:5000/api/${url}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,9 +19,9 @@ async function fetchData() {
         }
         const data = await response.json();
         console.log('Данные от API:', data);
-        content.innerText = data.message;
+        content.innerText = `Ответ от сервера: ${data.message}`;
     } catch (error) {
         console.error('Ошибка:', error);
-        content.innerText = 'Произошла ошибка при запросе';
+        content.innerText = `Ошибка: ${error.message}`;
     }
 }
