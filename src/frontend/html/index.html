@@ -3,11 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Обои для рабочего стола</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="content" onclick="fetchData('get_data', '#content')">Загрузка...</div>
-    <script src="../js/script.js"> </script>
-    <!-- <script>fetchData('get_data')</script> -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Wallpapers</h1>
+            <div class="orientation-select">
+                <label for="orientation">Ориентация:</label>
+                <select id="orientation" name="orientation">
+                    <option value="horizontal">Горизонтальные</option>
+                    <option value="vertical">Вертикальные</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Категории</h2>
+            <ul class="category-list">
+                <li><a href="#">Случайные</a></li>
+                <li><a href="#">Природа</a></li>
+                <li><a href="#">Абстракция</a></li>
+                <li><a href="#">Космос</a></li>
+                <li><a href="#">Город</a></li>
+                <li><a href="#">Технологии</a></li>
+            </ul>
+        </aside>
+
+        <section class="wallpapers">
+            <div class="wallpapers-items">
+                <div class="wallpaper-item">
+                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <div class="wallpaper-menu">
+                    </div>
+                </div>
+                <div class="wallpaper-item">
+                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <div class="wallpaper-menu">
+                    </div>
+                </div>
+                <div class="wallpaper-item">
+                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <div class="wallpaper-menu">
+                    </div>
+                </div>
+                <div class="wallpaper-item">
+                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <div class="wallpaper-menu">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+    </footer>
 </body>
 </html>
