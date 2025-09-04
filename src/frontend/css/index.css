@@ -19,22 +19,24 @@ body {
 
 .container {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.orientation-select {
-    margin-left: auto;
-}
 
 main {
     display: flex;
     flex: 1;
+    flex-direction: row;
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 200px;
-    background-color: #f4f4f4;
+    background-color: #c2c2c2;
     padding: 20px;
 }
 
@@ -60,24 +62,40 @@ main {
 }
 
 .wallpapers {
-    display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
     padding: 10px;
+    width: 100%;
 }
 
 .wallpapers-items {
-    
+
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
-
-
 
 .wallpaper-item-img {
     width: 100%;
-    height: 150px; 
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
 }
 
+
+
+.fullscreen-box {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+.fullscreen-box-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fullscreen-image-box {}
+
+.fullscreen-image-item {
+    width: 80%;
+    height: 80%;
+}

@@ -25,3 +25,4 @@ async function fetchData(url, content_name) {
         content.innerText = `Ошибка: ${error.message}`;
     }
 }
+
