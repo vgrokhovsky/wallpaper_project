@@ -25,3 +25,16 @@ async function fetchData(url, content_name) {
         content.innerText = `Ошибка: ${error.message}`;
     }
 }
+
+
+function toggleDisplay() {
+    const elementBOX = document.querySelector('.fullscreen-box');
+    const elementBg = document.querySelector('.fullscreen-box-bg');
+    if (elementBg) {
+        elementBg.addEventListener('click', function () {
+            console.log('hidden')
+            elementBOX.style.visibility = 'hidden'
+        })
+    }
+}
+

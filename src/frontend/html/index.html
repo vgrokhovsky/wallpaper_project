@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обои для рабочего стола</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
+
 <body>
     <header class="header">
         <div class="container">
             <h1 class="logo">Wallpapers</h1>
+        </div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <div class="category-box">
+                <h2>Категории</h2>
+                <ul class="category-list">
+                    <li><a href="#">Случайные</a></li>
+                    <li><a href="#">Природа</a></li>
+                    <li><a href="#">Абстракция</a></li>
+                    <li><a href="#">Космос</a></li>
+                    <li><a href="#">Город</a></li>
+                    <li><a href="#">Технологии</a></li>
+                </ul>
+            </div>
             <div class="orientation-select">
                 <label for="orientation">Ориентация:</label>
                 <select id="orientation" name="orientation">
@@ -17,41 +35,30 @@
                     <option value="vertical">Вертикальные</option>
                 </select>
             </div>
-        </div>
-    </header>
-
-    <main>
-         <aside class="sidebar"></aside>
-            <h2>Категории</h2>
-            <ul class="category-list">
-                <li><a href="#">Случайные</a></li>
-                <li><a href="#">Природа</a></li>
-                <li><a href="#">Абстракция</a></li>
-                <li><a href="#">Космос</a></li>
-                <li><a href="#">Город</a></li>
-                <li><a href="#">Технологии</a></li>
-            </ul>
         </aside>
 
         <section class="wallpapers">
             <div class="wallpapers-items">
                 <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <img class="wallpaper-item-img" onclick=openFullScreenBox()
+                        src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
                     <div class="wallpaper-menu">
                     </div>
                 </div>
                 <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <img class="wallpaper-item-img" onclick=openFullScreenBox()
+                        src="../wallpapers/thumb-1920-1347902.png" alt="">
                     <div class="wallpaper-menu">
                     </div>
                 </div>
                 <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <img class="wallpaper-item-img" onclick=openFullScreenBox() src="../wallpapers/download (10).jpeg"
+                        alt="">
                     <div class="wallpaper-menu">
                     </div>
                 </div>
                 <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
+                    <img class="wallpaper-item-img" onclick=openFullScreenBox() src="../wallpapers/i.webp" alt="">
                     <div class="wallpaper-menu">
                     </div>
                 </div>
@@ -61,5 +68,20 @@
 
     <footer>
     </footer>
+
+    <div class="fullscreen-box">
+        <div class="fullscreen-box-bg" onclick="toggleDisplay()">
+            <div class="fullscreen-image-box">
+                <div class="fullscreen-image">
+                    <img class="fullscreen-image-item" src="" alt="">
+                </div>
+                <div class="fullscreen-image-menu">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script src="../js/onload_scripts.js"></script>
+<script src="../js/script.js"></script>
+
 </html>

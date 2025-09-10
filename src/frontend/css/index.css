@@ -19,22 +19,24 @@ body {
 
 .container {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.orientation-select {
-    margin-left: auto;
-}
 
 main {
     display: flex;
     flex: 1;
+    flex-direction: row;
 }
 
 .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 200px;
-    background-color: #f4f4f4;
+    background-color: #c2c2c2;
     padding: 20px;
 }
 
@@ -60,25 +62,55 @@ main {
 }
 
 .wallpapers {
-    display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
     padding: 10px;
+    width: 100%;
 }
 
 .wallpapers-items {
-    
+
     display: grid;
+<<<<<<< HEAD
     grid-template-columns: repeat(4, 1fr); 
     gap: 10px; 
 
+=======
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+>>>>>>> a2c6b2ed5cb965483b8f110d25b140aad76a0387
 }
-
-
 
 .wallpaper-item-img {
     width: 100%;
-    height: 150px; 
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
 }
 
+
+
+.fullscreen-box {
+    visibility: hidden;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+.fullscreen-box-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fullscreen-image-box {
+    width: 80%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3%;
+
+
+}
+
+.fullscreen-image-item {
+    width: 100%;
+}
