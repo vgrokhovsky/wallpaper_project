@@ -1,10 +1,11 @@
 from flask import Flask
+from flask_login import UserMixin
 from datetime import datetime
 from . import bd_object as bd
 
 
 
-class User(db.Model):
+class User(db.Model,UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
