@@ -23,9 +23,9 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember.data)  # Вход в систему
+            login_user(user, remember=form.remember.data) 
             flash('Вы успешно вошли!', 'success')
-            return redirect(url_for('some_protected_view'))  # Здесь перенаправляем на вашу защищенную страницу
+            return redirect(url_for('some_protected_view'))  
         else:
             flash('Неправильные имя пользователя или пароль', 'danger')
 
