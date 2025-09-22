@@ -1,8 +1,9 @@
+from datetime import datetime
+
 from flask import Flask
 from flask_login import UserMixin
-from datetime import datetime
-from . import bd_object as db
 
+from . import bd_object as db
 
 
 class User(db.Model,UserMixin):

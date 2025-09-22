@@ -1,8 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import login_required, login_user, logout_user
+
 from . import auth_bp
+from .forms import LoginForm, RegistrationForm
 from .models.user import User, db
-from .forms import RegistrationForm, LoginForm
+
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
