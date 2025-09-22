@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_login import UserMixin
 from datetime import datetime
-from . import bd_object as bd
+from . import bd_object as db
 
 
 
@@ -15,6 +15,7 @@ class User(db.Model,UserMixin):
     avatar = db.Column(db.String(256), nullable=True)  
     created_at = db.Column(db.DateTime, default=datetime.now)
     last_login = db.Column(db.DateTime, nullable=True)
+    
 
     favorites = db.relationship('Favorite', back_populates='user')
 
