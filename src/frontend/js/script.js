@@ -1,4 +1,3 @@
-// src/frontend/js/script.js
 document.addEventListener('DOMContentLoaded', () => {
     // Загрузка обоев из API
     fetchWallpapers();
