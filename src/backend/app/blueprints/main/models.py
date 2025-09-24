@@ -1,25 +1,5 @@
 from datetime import datetime
-
-from flask import Flask
-from flask_login import UserMixin
-
-from . import bd_object as db
-
-
-class User(db.Model,UserMixin):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    avatar = db.Column(db.String(256), nullable=True)  
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    last_login = db.Column(db.DateTime, nullable=True)
-    
-
-    favorites = db.relationship('Favorite', back_populates='user')
-
+from app.db import db_object as db
 
 class Image(db.Model):
     __tablename__ = 'images'
@@ -27,13 +7,12 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     filename = db.Column(db.String(256), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    description = db.Column(db.String(512), nullable=True)  
+    description = db.Column(db.String(512), nullable=True)
     upload_date = db.Column(db.DateTime, default=datetime.now)
-    views_count = db.Column(db.Integer, default=0) 
+    views_count = db.Column(db.Integer, default=0)
 
     user = db.relationship('User', back_populates='images')
     favorites = db.relationship('Favorite', back_populates='image')
-
 
 class Favorite(db.Model):
     __tablename__ = 'favorites'
@@ -43,7 +22,5 @@ class Favorite(db.Model):
     image_id = db.Column(db.Integer, db.ForeignKey('images.id'), nullable=False)
     added_at = db.Column(db.DateTime, default=datetime.now)
 
-    
     user = db.relationship('User', back_populates='favorites')
     image = db.relationship('Image', back_populates='favorites')
-

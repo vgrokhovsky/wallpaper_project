@@ -1,3 +1,4 @@
+/* src/frontend/css/index.css */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,7 +24,6 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
 
 main {
     display: flex;
@@ -67,50 +67,69 @@ main {
 }
 
 .wallpapers-items {
-
     display: grid;
-<<<<<<< HEAD
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px; 
-
-=======
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
->>>>>>> a2c6b2ed5cb965483b8f110d25b140aad76a0387
 }
 
 .wallpaper-item-img {
     width: 100%;
+    height: auto;
     object-fit: cover;
     display: block;
+    cursor: pointer;
 }
 
-
-
 .fullscreen-box {
-    visibility: hidden;
+    display: none;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 1000;
 }
 
 .fullscreen-box-bg {
-    position: relative;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .fullscreen-image-box {
-    width: 80%;
-    height: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 3%;
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-
+.fullscreen-image {
+    position: relative;
 }
 
 .fullscreen-image-item {
-    width: 100%;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
 }
+
+.fullscreen-image-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.menu-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px
