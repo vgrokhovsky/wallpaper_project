@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обои для рабочего стола</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
+
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo">Wallpapers</h1>
+            <h1 class="logo">Обои</h1>
+        </div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <div class="category-box">
+                <h2>Категории</h2>
+                <ul class="category-list">
+                    <li><a href="#" data-category="random">Случайные</a></li>
+                    <li><a href="#" data-category="nature">Природа</a></li>
+                    <li><a href="#" data-category="abstract">Абстракция</a></li>
+                    <li><a href="#" data-category="space">Космос</a></li>
+                    <li><a href="#" data-category="city">Город</a></li>
+                    <li><a href="#" data-category="tech">Технологии</a></li>
+                </ul>
+            </div>
             <div class="orientation-select">
                 <label for="orientation">Ориентация:</label>
                 <select id="orientation" name="orientation">
@@ -17,49 +35,32 @@
                     <option value="vertical">Вертикальные</option>
                 </select>
             </div>
-        </div>
-    </header>
-
-    <main>
-        <aside>
-            <h2>Категории</h2>
-            <ul class="category-list">
-                <li><a href="#">Случайные</a></li>
-                <li><a href="#">Природа</a></li>
-                <li><a href="#">Абстракция</a></li>
-                <li><a href="#">Космос</a></li>
-                <li><a href="#">Город</a></li>
-                <li><a href="#">Технологии</a></li>
-            </ul>
         </aside>
 
         <section class="wallpapers">
-            <div class="wallpapers-items">
-                <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
-                    <div class="wallpaper-menu">
-                    </div>
-                </div>
-                <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
-                    <div class="wallpaper-menu">
-                    </div>
-                </div>
-                <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
-                    <div class="wallpaper-menu">
-                    </div>
-                </div>
-                <div class="wallpaper-item">
-                    <img class="wallpaper-item-img" src="../wallpapers/cat_art_window_140051_1920x1080.jpg" alt="">
-                    <div class="wallpaper-menu">
-                    </div>
-                </div>
+            <div class="wallpapers-items" id="wallpapers-container">
+                <!-- Обои будут загружены динамически здесь -->
             </div>
         </section>
     </main>
 
-    <footer>
-    </footer>
+    <footer></footer>
+
+    <div class="fullscreen-box" id="fullscreen-box" style="display: none;">
+        <div class="fullscreen-box-bg">
+            <div class="fullscreen-image-box">
+                <div class="fullscreen-image">
+                    <img class="fullscreen-image-item" id="fullscreen-image" src="" alt="">
+                    <div class="fullscreen-image-menu">
+                        <button class="menu-button download-button" onclick="downloadImage()">Скачать</button>
+                        <button class="menu-button close-button" onclick="toggleFullScreen()">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
 </body>
+
 </html>

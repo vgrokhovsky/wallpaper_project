@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<body>
+<h1>Авторизация</h1>
+<form method="POST">
+    {{ form.hidden_tag() }} <!-- Защита от CSRF -->
+    <div>{{ form.username.label }} {{ form.username() }}</div>
+    <div>{{ form.password.label }} {{ form.password() }}</div>
+    <div>{{ form.remember }} {{ form.remember.label }}</div>
+    <div>{{ form.submit() }}</div>
+</form>
+</body>
+</html>
