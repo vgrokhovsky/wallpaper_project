@@ -124,7 +124,7 @@ class Image(BaseModel):
     favorites = db.relationship("Favorite", back_populates="image")
     categories = db.relationship("Category", secondary=category_image, backref="images")
     colors = db.relationship("Colors", secondary=colors_image, backref="images")
-    keywords = db.relationship("Keywords", secondary=colors_image, backref="images")
+    keywords = db.relationship("Keywords", secondary=keywords_image, backref="images")
 
     # GET
 
