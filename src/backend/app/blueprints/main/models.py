@@ -146,9 +146,16 @@ class Image(BaseModel):
     # GET
 
     @classmethod
-    def get_images_by_filter(cls, **filters):
-        query = cls.query
+    def get_images_by_filter(self, category_id=None, color_id=None, page=1, per_page=10):
+        query = db.session.query(Image)
+    
+        if category_id:
+            query = query.join(category_image).filter(category_image.c.category_id == category_id)
 
+        if color_id:
+         query = query.join(colors_image).filter(colors_image.c.colors_id == color_id)
+
+        return query.paginate(page, per_page, error_out=False)
         # for filter_name in filters.keys():
         #     pass
 

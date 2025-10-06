@@ -39,4 +39,7 @@ def create_app():
     with app.app_context():
         db_object.create_all()
 
+    from blueprints.admin import configure_admin
+    configure_admin(app)
+
     return app
