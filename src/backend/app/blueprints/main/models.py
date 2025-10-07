@@ -139,25 +139,19 @@ class Image(BaseModel):
 
     user = db.relationship("User", back_populates="images")
     favorites = db.relationship("Favorite", back_populates="image")
-    categories = db.relationship("Category", secondary=category_image, backref="images")
-    colors = db.relationship("Colors", secondary=colors_image, backref="images")
-    keywords = db.relationship("Keywords", secondary=keywords_image, backref="images")
+    categories = db.relationship(
+        "Category", secondary=category_image, back_populates="images"
+    )
+    colors = db.relationship("Colors", secondary=colors_image, back_populates="images")
+    keywords = db.relationship(
+        "Keywords", secondary=keywords_image, back_populates="images"
+    )
 
     # GET
 
     @classmethod
-    def get_images_by_filter(self, category_id=None, color_id=None, page=1, per_page=10):
-        query = db.session.query(Image)
-    
-        if category_id:
-            query = query.join(category_image).filter(category_image.c.category_id == category_id)
-
-        if color_id:
-         query = query.join(colors_image).filter(colors_image.c.colors_id == color_id)
-
-        return query.paginate(page, per_page, error_out=False)
-        # for filter_name in filters.keys():
-        #     pass
+    def get_images_by_filter(cls, page=1, per_page=10, **filters):
+        query = cls.query
 
         if "category_id" in filters:
             query = query.join(category_image).filter(
@@ -177,11 +171,9 @@ class Image(BaseModel):
                 keywords_image.c.keyword_id == filters["keyword_id"]
             )
 
-        return query.all()
+        return query.paginate(page, per_page, error_out=False)
 
     def get_random_images(self, limit=20):
-        # images = db.session.query(Image).all()
-        # return random.sample(images, min(limit, len(images)))
         images = db.session.query(Image).order_by(db.func.random()).limit(limit).all()
         return images
 
@@ -203,8 +195,8 @@ class Category(BaseModel):
 
     images = db.relationship(
         "Image",
-        secondary="category_image",
-        backref="categories",
+        secondary=category_image,
+        back_populates="categories",
     )
 
 
@@ -223,6 +215,6 @@ class Keywords(BaseModel):
 
     images = db.relationship(
         "Image",
-        secondary=colors_image,
+        secondary=keywords_image,
         back_populates="keywords",
     )
