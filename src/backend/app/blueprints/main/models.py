@@ -58,6 +58,17 @@ keywords_image = db.Table(
 class BaseModel(db.Model):
     __abstract__ = True
 
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+    name = db.Column(
+        db.String(80),
+        unique=True,
+        nullable=False,
+    )
+
     # CRUD
     def add(self):
         try:
@@ -102,6 +113,13 @@ class BaseModel(db.Model):
             raise Exception(f"Ошибка при получении {str(e)}")
 
     @classmethod
+    def get_id_by_name(cls, name):
+        try:
+            return cls.query.get(name)
+        except SQLAlchemyError as e:
+            raise Exception(f"Ошибка при получении {str(e)}")
+
+    @classmethod
     def get_all(cls):
         try:
             return cls.query.all()
@@ -112,8 +130,7 @@ class BaseModel(db.Model):
 class Image(BaseModel):
     __tablename__ = "images"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    filename = db.Column(db.String(256), nullable=False)
+    name = db.Column(db.String(256), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     orientation = db.Column(db.String(32), nullable=False)  # vertical, horizontal
     upload_date = db.Column(db.DateTime, default=datetime.now)
@@ -146,10 +163,12 @@ class Image(BaseModel):
             )
 
         if "orientation" in filters:
-            pass
+            query = query.filter(Image.orientation == filters["orientation"])
 
-        if "keywords" in filters:
-            pass
+        if "keyword_id" in filters:
+            query = query.join(keywords_image).filter(
+                keywords_image.c.keyword_id == filters["keyword_id"]
+            )
 
         return query.all()
 
@@ -160,7 +179,7 @@ class Image(BaseModel):
         return images
 
 
-class Favorite(BaseModel):
+class Favorite(db.Model):
     __tablename__ = "favorites"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -175,26 +194,28 @@ class Favorite(BaseModel):
 class Category(BaseModel):
     __tablename__ = "categories"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    images = db.relationship("Image", secondary="category_image", backref="categories")
+    images = db.relationship(
+        "Image",
+        secondary="category_image",
+        backref="categories",
+    )
 
 
 class Colors(BaseModel):
     __tablename__ = "colors"
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-        autoincrement=True,
-    )
-    name = db.Column(
-        db.String(80),
-        unique=True,
-        nullable=False,
-    )
     images = db.relationship(
         "Image",
         secondary=colors_image,
         back_populates="colors",
+    )
+
+
+class Keywords(BaseModel):
+    __tablename__ = "keywords"
+
+    images = db.relationship(
+        "Image",
+        secondary=colors_image,
+        back_populates="keywords",
     )
