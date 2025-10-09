@@ -1,7 +1,11 @@
 import os
 from pathlib import Path
 
+<<<<<<< HEAD
 from flask import jsonify, request
+=======
+from flask import Blueprint, jsonify, request
+>>>>>>> b8b8ad3 (09.10.2025)
 
 from . import main_bp
 from .models import Category, Colors, Image, Keywords
