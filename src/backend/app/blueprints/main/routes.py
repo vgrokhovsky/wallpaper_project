@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 
 from flask import Blueprint, jsonify, request
-from models import Category, Colors, Image, Keywords
 
 from . import main_bp
+from .models import Category, Colors, Image, Keywords
 
 WALLPAPERS_DIR = Path("src/frontend/wallpapers")
 
