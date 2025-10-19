@@ -5,7 +5,10 @@ from pathlib import Path
 from flask import jsonify, request
 =======
 from flask import Blueprint, jsonify, request
+<<<<<<< HEAD
 >>>>>>> b8b8ad3 (09.10.2025)
+=======
+>>>>>>> a3fbf787ef700e8e22515d6752c7cdf5e66c7d89
 
 from . import main_bp
 from .models import Category, Colors, Image, Keywords
