@@ -2,6 +2,7 @@ import random
 from datetime import datetime
 
 from app.db import db_object as db
+from colorthief import ColorThief
 from sqlalchemy.exc import SQLAlchemyError
 
 category_image = db.Table(
@@ -147,6 +148,10 @@ class Image(BaseModel):
         "Keywords", secondary=keywords_image, back_populates="images"
     )
 
+    @staticmethod
+    def save_image(img, img_name):
+        pass
+
     # GET
 
     @classmethod
@@ -208,6 +213,13 @@ class Colors(BaseModel):
         secondary=colors_image,
         back_populates="colors",
     )
+
+    @classmethod
+    def extract_main_color(cls):
+        pass
+        # color_thief = ColorThief('/path/to/imagefile')
+        # dominant_color = color_thief.get_color(quality=1)
+        # return dominant_color
 
 
 class Keywords(BaseModel):
