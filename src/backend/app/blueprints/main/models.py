@@ -204,6 +204,12 @@ class Category(BaseModel):
         back_populates="categories",
     )
 
+    name_ru = db.Column(
+        db.String(80),
+        unique=True,
+        nullable=False,
+    )
+
 
 class Colors(BaseModel):
     __tablename__ = "colors"
@@ -229,4 +235,9 @@ class Keywords(BaseModel):
         "Image",
         secondary=keywords_image,
         back_populates="keywords",
+    )
+    name_ru = db.Column(
+        db.String(80),
+        unique=True,
+        nullable=False,
     )

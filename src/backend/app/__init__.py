@@ -36,10 +36,12 @@ def create_app():
 
     # Регистрация blueprints
     from .blueprints.auth import auth_bp
+    from .blueprints.image import image_bp
     from .blueprints.main import main_bp
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(main_bp, url_prefix="/")
+    app.register_blueprint(image_bp, url_prefix="/api")
 
     # Создание таблиц
     with app.app_context():

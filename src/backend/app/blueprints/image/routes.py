@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 
 from ..main.models import Image
 from . import image_bp
+from .forms import ImageForm
 
 WALLPAPERS_DIR = Path("src/frontend/wallpapers")
 ALLOWED_EXTENSIONS = (
@@ -18,38 +19,48 @@ ALLOWED_EXTENSIONS = (
 
 
 def allowed_file(filename):
-    """Проверка  расширений файла."""
+    """Проверка расширений файла."""
+    print(filename.rsplit(".", 1)[-1].lower())
+    print(filename.rsplit(".", 1)[-1].lower() in ALLOWED_EXTENSIONS)
     return "." in filename and filename.rsplit(".", 1)[-1].lower() in ALLOWED_EXTENSIONS
 
 
-@image_bp.route("/api/image", methods=["GET", "POST"])
+@image_bp.route("/image", methods=["GET", "POST"])
 def image_add():
-    if request.method == "POST":
-        file = request.files.get("file")
-
+    user_id = None
+    form = ImageForm()
+    if form.validate_on_submit() or request.method == "POST":
+        if form.validate_on_submit():
+            file = form.file.data
+        else:
+            file = form.request.data
         # Проверка на наличие файла
         if not file:
             flash("Файл не выбран", "error")
             return redirect(request.url)
 
         # Проверка на корректность имени !!!
-        if file.filename in '\/:*?"<>|+"':
-            flash('Имя файла не должно содержать, \/:*?"<>|+"', "error")
+        if file.filename in ':*?"<>|+':
+            flash('Имя файла не должно содержать, :*?<>|+"', "error")
             return redirect(request.url)
 
+        print("имя верное")
         # Проверка на разрешенные форматы
         if not allowed_file(file.filename):
             flash("Недопустимый формат файла", "error")
             return redirect(request.url)
 
-        filename = secure_filename(file.filename)
+        print("формат верный")
+        filename = secure_filename(file.filename)  # !!! Случайное значение
         filepath = os.path.join(WALLPAPERS_DIR, filename)
 
         WALLPAPERS_DIR.mkdir(parents=True, exist_ok=True)  # !!!
+        print(filepath)
         file.save(filepath)
 
-        # user_id !!!
-        new_image = Image(filename=filename, user_id=user_id, orientation=orientation)
+        new_image = Image(
+            name=filename, user_id=user_id, orientation=form.orientation.data
+        )
         try:
             db.session.add(new_image)
             db.session.commit()
@@ -57,13 +68,14 @@ def image_add():
                 "Изображение успешно загружено и сохранено в базе данных!",
                 "success",
             )
+            print("добавил в базу")
             return redirect(url_for("image_bp.image_add"))
         except Exception as e:
             print("error", e)
         finally:
             db.session.close()
 
-    return render_template("image_add.html")
+    return render_template("image_add.html", form=form)
 
     # flash("Image add")
     # return redirect(url_for("image_bp.image_add"))

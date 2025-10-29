@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="POST" action="/api/image" , enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        {{ form.file.label }} {{ form.file() }}
+        {{ form.categories.label }} {{ form.categories() }}
+        {{ form.orientation.label }} {{ form.orientation() }}
+        {{ form.keywords.label }} {{ form.keywords() }}
+        {{ form.submit()}}
+    </form>
+</body>
+
+</html>
