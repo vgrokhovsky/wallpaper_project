@@ -4,19 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <title>Загруска Фотогафий</title>
+    <link rel="stylesheet" href="..css\image_add.css"
 
 <body>
-    <form method="POST" action="/api/image" , enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+     <div class="container">
+        <h1>Upload Image</h1>
+        <form method="POST" action="/api/image" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
 
-        {{ form.file.label }} {{ form.file() }}
-        {{ form.categories.label }} {{ form.categories() }}
-        {{ form.orientation.label }} {{ form.orientation() }}
-        {{ form.keywords.label }} {{ form.keywords() }}
-        {{ form.submit()}}
-    </form>
+            {{ form.file.label }} {{ form.file() }}
+
+            <div class="color-picker">
+                <label for="color">Choose Color:</label>
+                <input type="color" id="color" name="color" value="#ffffff" onchange="updateColorDisplay()">
+                <div class="color-display" id="colorDisplay" style="background-color: #ffffff;"></div>
+            </div>
+
+            {{ form.categories.label }} {{ form.categories() }}
+            {{ form.orientation.label }} {{ form.orientation() }}
+            {{ form.keywords.label }} {{ form.keywords() }}
+            {{ form.submit() }}
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="message">
+                    <ul>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
 </body>
 
 </html>
