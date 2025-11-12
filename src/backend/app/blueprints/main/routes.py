@@ -38,7 +38,9 @@ def get_wallpapers():
             page=page, per_page=per_page, **filters
         )
 
-        wallpapers = [f"wallpapers/{image.filename}" for image in images_page.items]
+        wallpapers = [
+            f"wallpapers/{image.filename}" for image in images_page.items
+        ]
 
         return (
             jsonify(

@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Загруска Фотогафий</title>
-    <link rel="stylesheet" href="..css\image_add.css"
+    <link rel="stylesheet" href="{{ url_for('images.static', filename='css/image_add.css' ) }}">
 
 <body>
-     <div class="container">
+    <div class="container">
         <h1>Upload Image</h1>
         <form method="POST" action="/api/image" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
@@ -28,15 +28,15 @@
         </form>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="message">
-                    <ul>
-                        {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+        {% if messages %}
+        <div class="message">
+            <ul>
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
         {% endwith %}
     </div>
 </body>

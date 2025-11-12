@@ -3,10 +3,18 @@ from datetime import datetime
 from pathlib import Path
 
 from app.db import db_object as db
-from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from werkzeug.utils import secure_filename
 
-from ..main.models import Image
+from ..main.models import Colors, Image
 from . import image_bp
 from .forms import ImageForm
 
@@ -22,7 +30,10 @@ def allowed_file(filename):
     """Проверка расширений файла."""
     print(filename.rsplit(".", 1)[-1].lower())
     print(filename.rsplit(".", 1)[-1].lower() in ALLOWED_EXTENSIONS)
-    return "." in filename and filename.rsplit(".", 1)[-1].lower() in ALLOWED_EXTENSIONS
+    return (
+        "." in filename
+        and filename.rsplit(".", 1)[-1].lower() in ALLOWED_EXTENSIONS
+    )
 
 
 @image_bp.route("/image", methods=["GET", "POST"])
@@ -55,11 +66,23 @@ def image_add():
         filepath = os.path.join(WALLPAPERS_DIR, filename)
 
         WALLPAPERS_DIR.mkdir(parents=True, exist_ok=True)  # !!!
-        print(filepath)
         file.save(filepath)
+        color_by_image = Image.extract_main_color(filepath)
+        hex_color = Colors.rgb_to_hex(color_by_image)
+
+        color = Colors.get_id_by_name(hex_color)
+
+        if not color:
+            distance = Colors.color_distance_simple(color_by_image)
+            color = Colors(name=hex_color, distance=distance)
+            color_id = color.id
+            color.add()
 
         new_image = Image(
-            name=filename, user_id=user_id, orientation=form.orientation.data
+            name=filename,
+            user_id=user_id,
+            orientation=form.orientation.data,
+            colors=color_id,
         )
         try:
             db.session.add(new_image)

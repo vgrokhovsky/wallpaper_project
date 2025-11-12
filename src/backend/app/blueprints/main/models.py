@@ -1,3 +1,4 @@
+import math
 import random
 from datetime import datetime
 
@@ -75,7 +76,7 @@ class BaseModel(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
-            return True
+            return self
         except Exception as e:
             db.session.rollback()
             print(f"Error adding image: {e}")
@@ -133,7 +134,9 @@ class Image(BaseModel):
 
     name = db.Column(db.String(256), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    orientation = db.Column(db.String(32), nullable=False)  # vertical, horizontal
+    orientation = db.Column(
+        db.String(32), nullable=False
+    )  # vertical, horizontal
     upload_date = db.Column(db.DateTime, default=datetime.now)
     views_count = db.Column(db.Integer, default=0)
     last_view = db.Column(db.DateTime)
@@ -143,7 +146,9 @@ class Image(BaseModel):
     categories = db.relationship(
         "Category", secondary=category_image, back_populates="images"
     )
-    colors = db.relationship("Colors", secondary=colors_image, back_populates="images")
+    colors = db.relationship(
+        "Colors", secondary=colors_image, back_populates="images"
+    )
     keywords = db.relationship(
         "Keywords", secondary=keywords_image, back_populates="images"
     )
@@ -151,6 +156,12 @@ class Image(BaseModel):
     @staticmethod
     def save_image(img, img_name):
         pass
+
+    @staticmethod
+    def extract_main_color(file):
+        color_thief = ColorThief(file)
+        dominant_color = color_thief.get_color(quality=1)
+        return dominant_color
 
     # GET
 
@@ -179,7 +190,12 @@ class Image(BaseModel):
         return query.paginate(page, per_page, error_out=False)
 
     def get_random_images(self, limit=20):
-        images = db.session.query(Image).order_by(db.func.random()).limit(limit).all()
+        images = (
+            db.session.query(Image)
+            .order_by(db.func.random())
+            .limit(limit)
+            .all()
+        )
         return images
 
 
@@ -219,13 +235,44 @@ class Colors(BaseModel):
         secondary=colors_image,
         back_populates="colors",
     )
+    distance = db.Column(db.Float, nullable=False)
 
     @classmethod
-    def extract_main_color(cls):
-        pass
-        # color_thief = ColorThief('/path/to/imagefile')
-        # dominant_color = color_thief.get_color(quality=1)
-        # return dominant_color
+    def color_distance_simple(cls, color):
+        white = (255, 255, 255)
+
+        # Проверяем, что введенный цветвалидный RGB
+        if not all(0 <= c <= 255 for c in color):
+            raise ValueError(
+                "Значения цвета должны быть в диапазоне от 0 до 255"
+            )
+
+        # Вычисляем расстояние
+        distance = math.sqrt(
+            (color[0] - white[0]) ** 2
+            + (color[1] - white[1]) ** 2
+            + (color[2] - white[2]) ** 2
+        )
+        return distance
+
+    @classmethod
+    def rgb_to_hex(cls, rgb_color):
+        r, g, b = rgb_color
+        return f"#{r:02x}{g:02x}{b:02x}"
+
+    def hex_to_rgb(self, hex_color):
+        r = int(hex_color[1:3], 16)
+        g = int(hex_color[3:5], 16)
+        b = int(hex_color[4:6], 16)
+        return (r, g, b)
+
+    @classmethod
+    def get_image_by_color_distance(cls, distance):
+        colors = cls.query.filter(cls.distance == distance)
+        images_list = []
+        for color in colors:
+            images_list += color.images
+        return images_list
 
 
 class Keywords(BaseModel):
